@@ -2,6 +2,7 @@
 function len( input ) {
     var count = 0;
 
+    input = (function () { return ( typeof input === 'number' ) && input.toString() || input; } ());
     input = input && Array.prototype.slice.call(input) || false;
 
     if ( input ) {
@@ -18,11 +19,3 @@ function len( input ) {
         return count;    
     }
 }
-
-(function () {
-    console.log(len(''));    
-    console.log(len('my road'));    
-    console.log(len([1, 2, 3]));    
-    console.log(len([1, 2, 3, [4]]));    
-    console.log(typeof len('test'));    
-} ());
