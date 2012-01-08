@@ -62,7 +62,11 @@ function linkfy ( att ) {
             if ( att['target'] ) {
                 att['target'] = ( att['target'].indexOf('_') === 0 ) && att['target'] || '{0}{1}'.deal('_', att['target']);
 
-                return '<a href=\"{0}\" target=\"{1}\"> {2} </a>'.deal(att['href'], att['target'], att['content']);   
+                if ( att['rel'] ) {
+                    return '<a href=\"{0}\" target=\"{1}\" rel=\"{2}\"> {3} </a>'.deal(att['href'], att['target'], att['rel'], att['content']);    
+                } else {
+                    return '<a href=\"{0}\" target=\"{1}\"> {2} </a>'.deal(att['href'], att['target'], att['content']);   
+                }
             } else {
                 return '<a href=\"{0}\"> {1} </a>'.deal(att['href'], att['content']);
             }
