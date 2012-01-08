@@ -48,40 +48,38 @@ String.prototype.deal = function() {
 function linkfy ( att ) {
     // Create a link tag
     att = att || false;
-    att['content'] = att['content'] || false;
-    att['title'] = att['title'] || false;
-    att['rel'] = att['rel'] || false;
-    att['class'] = att['class'] || false;
-    att['id'] = att['id'] || false;
     att['href'] = att['href'] || false;
+    att['content'] = att['content'] || false;
+    att['id'] = att['id'] || false;
+    att['class'] = att['class'] || false;
+    att['target'] = att['target'] || false;
+    att['rel'] = att['rel'] || false;
 
     if ( att ) {
-        if ( att['href'] ) {
-            att['content'] = att['content'] || att['href'];
+     var insertAtt,
+         content;
+     
+     if ( att['href'] ) {
+         insertAtt = 'href=\"{0}\"'.deal( att['href'] );
+         content = att['href'];
 
-            if ( att['target'] ) {
-                att['target'] = ( att['target'].indexOf('_') === 0 ) && att['target'] || '{0}{1}'.deal('_', att['target']);
+         if ( att['content'] ) {
+             content = att['content'];
+         } if ( att['id'] ) {
+            insertAtt += ' id=\"{0}\"'.deal( att['id'] );
+         } if ( att['class'] ) {
+            insertAtt += ' class=\"{0}\"'.deal( att['class'] ) 
+         } if ( att['target'] ) {
+            att['target'] = ( att['target'].indexOf('_') === 0 ) &&
+                            att['target'] || '_{0}'.deal( att['target'] );
+            insertAtt += ' target=\"{0}\"'.deal( att['target'] ) 
+         } if ( att['rel'] ) {
+            insertAtt += ' rel=\"{0}\"'.deal( att['rel'] );
+         }
 
-                if ( att['rel'] ) {
-                    return '<a href=\"{0}\" target=\"{1}\" rel=\"{2}\"> {3} </a>'.deal(att['href'], att['target'], att['rel'], att['content']);    
-                } else {
-                    return '<a href=\"{0}\" target=\"{1}\"> {2} </a>'.deal(att['href'], att['target'], att['content']);   
-                }
-            } else {
-                return '<a href=\"{0}\"> {1} </a>'.deal(att['href'], att['content']);
-            }
-        } else {
-            return false;
-        }
-    } else {
-        return false;
+         return '<a {0}>{1}</a>'.deal(insertAtt, content);
+     } else {
+         return false;
+     }
     }
 }
-
-(function () {
-    console.log( linkfy( {content: 'Google', href: 'http://www.google.com'}) );
-    console.log( linkfy( {href: 'http://www.google.com'}) );
-    console.log( linkfy( {href: 'http://www.google.com', content: 'Google', target: 'blank'}) );
-    console.log( linkfy( {href: 'http://www.google.com', content: 'Google', target: '_blank'}) );
-    console.log( linkfy( {content: 'Other test'}) );
-} ());
