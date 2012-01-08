@@ -63,7 +63,9 @@ function linkfy ( att ) {
          insertAtt = 'href=\"{0}\"'.deal( att['href'] );
          content = att['href'];
 
-         if ( att['content'] ) {
+         if ( content === att['href'] && !att['target'] && !att['content'] ) {
+           att['target'] = 'blank';  
+         } if ( att['content'] ) {
              content = att['content'];
          } if ( att['id'] ) {
             insertAtt += ' id=\"{0}\"'.deal( att['id'] );

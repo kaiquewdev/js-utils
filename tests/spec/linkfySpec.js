@@ -1,7 +1,7 @@
 describe( 'Linkfy function', function () {
     describe( 'Generate anchor by unique attibutes', function () {
         it( 'Simple anchor', function () {
-            expect(linkfy({href: 'http://www.google.com'})).toEqual('<a href="http://www.google.com">http://www.google.com</a>');    
+            expect(linkfy({href: 'http://www.google.com'})).toEqual('<a href="http://www.google.com" target="_blank">http://www.google.com</a>');    
         });
 
         it( 'text content anchor', function () {
@@ -15,14 +15,14 @@ describe( 'Linkfy function', function () {
             expect(linkfy({
                 href: 'http://www.google.com',
                 id: 'google-anchor'
-            })).toEqual('<a href="http://www.google.com" id="google-anchor">http://www.google.com</a>');    
+            })).toEqual('<a href="http://www.google.com" id="google-anchor" target="_blank">http://www.google.com</a>');    
         });
 
         it( 'Anchor with the class', function () {
             expect(linkfy({
                 href: 'http://www.google.com',
                 class: 'google-anchor-type'
-            })).toEqual('<a href="http://www.google.com" class="google-anchor-type">http://www.google.com</a>');    
+            })).toEqual('<a href="http://www.google.com" class="google-anchor-type" target="_blank">http://www.google.com</a>');    
         });
 
         it( 'Anchor with the target, underscore in set', function () {
@@ -43,7 +43,7 @@ describe( 'Linkfy function', function () {
             expect(linkfy({
                 href: 'http://www.google.com',
                 rel: 'external'
-            })).toEqual('<a href="http://www.google.com" rel="external">http://www.google.com</a>');    
+            })).toEqual('<a href="http://www.google.com" target="_blank" rel="external">http://www.google.com</a>');    
         });
     });
 
@@ -75,15 +75,13 @@ describe( 'Linkfy function', function () {
             })).toEqual('<a href="http://google.com" id="google-anchor" class="google-anchor-color" target="_self">Google.com</a>');
         });
 
-        it( 'Anchor content, more id, class, target and rel', function () {
+        it( 'Default target if content equal to href', function () {
             expect(linkfy({
                 href: 'http://google.com',
-                content: 'Google.com',
                 id: 'google-anchor',
                 class: 'google-anchor-color',
-                target: 'self',
                 rel: 'internal'
-            })).toEqual('<a href="http://google.com" id="google-anchor" class="google-anchor-color" target="_self" rel="internal">Google.com</a>');
+            })).toEqual('<a href="http://google.com" id="google-anchor" class="google-anchor-color" target="_blank" rel="internal">http://google.com</a>');
         });
     });
 });
